@@ -62,8 +62,8 @@ export function AapStatusCard() {
                 <div className="flex gap-3 mb-4">
                   <Pill className="size-5 flex-shrink-0 text-yellow-700 mt-0.5" aria-hidden="true" />
                   <div>
-                    <p className="text-sm leading-relaxed text-yellow-900">
-                      Make sure you are taking your preventer and reliever medications according to your Asthma Action Plan. Missing doses can increase the risk of asthma symptoms and flare-ups.
+                    <p className="text-xs leading-relaxed text-yellow-900">
+                      Make sure you are taking your medications according to your Asthma Action Plan. Missing doses can increase the risk of asthma symptoms and flare-ups.
                     </p>
                   </div>
                 </div>
@@ -71,8 +71,8 @@ export function AapStatusCard() {
                 <div className="flex gap-3">
                   <FileText className="size-5 flex-shrink-0 text-yellow-700 mt-0.5" aria-hidden="true" />
                   <div>
-                    <p className="text-sm leading-relaxed text-yellow-900">
-                      Review your Asthma Action Plan and contact your healthcare provider if symptoms continue or worsen.
+                    <p className="text-xs leading-relaxed text-yellow-900">
+                      Contact your healthcare provider if symptoms do not improve after 7-14 days of stepping up medications
                     </p>
                   </div>
                 </div>
