@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ClipboardList, ChevronRight, Upload } from "lucide-react"
+import { ClipboardList, ChevronRight, Upload, AlertCircle, Pill, FileText } from "lucide-react"
 import { useAsthma, ZONE_DETAILS } from "@/lib/asthma-store"
 import { ZONE_STYLES } from "@/lib/zone-styles"
 import { cn } from "@/lib/utils"
@@ -50,9 +50,40 @@ export function AapStatusCard() {
           </Link>
         )}
 
-        <p className="mt-4 text-sm leading-relaxed text-foreground/90 text-pretty">
-          {details.message}
-        </p>
+        {zone === "yellow" ? (
+          <div className="mt-5 space-y-4 rounded-2xl bg-yellow-50 p-4">
+            <div className="flex gap-3">
+              <AlertCircle className="size-6 flex-shrink-0 text-yellow-700 mt-0.5" aria-hidden="true" />
+              <div>
+                <h3 className="font-bold text-yellow-900 text-center mb-4">
+                  Your asthma may not be fully under control.
+                </h3>
+                
+                <div className="flex gap-3 mb-4">
+                  <Pill className="size-5 flex-shrink-0 text-yellow-700 mt-0.5" aria-hidden="true" />
+                  <div>
+                    <p className="text-sm leading-relaxed text-yellow-900">
+                      Make sure you are taking your preventer and reliever medications according to your Asthma Action Plan. Missing doses can increase the risk of asthma symptoms and flare-ups.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-3">
+                  <FileText className="size-5 flex-shrink-0 text-yellow-700 mt-0.5" aria-hidden="true" />
+                  <div>
+                    <p className="text-sm leading-relaxed text-yellow-900">
+                      Review your Asthma Action Plan and contact your healthcare provider if symptoms continue or worsen.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <p className="mt-4 text-sm leading-relaxed text-foreground/90 text-pretty">
+            {details.message}
+          </p>
+        )}
 
         {zone === "green" && <ReviewChecklist />}
 
