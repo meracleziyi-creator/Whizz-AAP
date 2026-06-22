@@ -1,9 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { CircleAlert as AlertCircle, CircleCheck as CheckCircle, TriangleAlert as AlertTriangle, FileText, ChevronRight } from "lucide-react"
+import { CircleAlert as AlertCircle, CircleCheck as CheckCircle, TriangleAlert as AlertTriangle } from "lucide-react"
 import { useAsthma } from "@/lib/asthma-store"
 import { useGinaAssessments } from "@/lib/gina-store"
 import {
@@ -74,6 +73,8 @@ export function GinaQuestionnaire() {
   const positiveCount = countPositiveResponses(answers)
   const controlStatus = calculateControlStatus(positiveCount)
 
+  const showAapNav = controlStatus !== "well_controlled" && zone === "green"
+
   function setAnswer(key: keyof GinaAnswers, value: boolean) {
     setAnswers((prev) => ({ ...prev, [key]: value }))
   }
@@ -87,7 +88,7 @@ export function GinaQuestionnaire() {
     setStep("save-confirm")
   }
 
-  function confirmSave() {
+  function confirmSave(goToAap: boolean) {
     const newAssessment: GinaAssessment = {
       id: crypto.randomUUID(),
       assessment_date: new Date().toISOString(),
@@ -107,7 +108,7 @@ export function GinaQuestionnaire() {
       q3_reliever_use: null,
       q4_activity_limitation: null,
     })
-    router.push("/gina?tab=history")
+    router.push(goToAap ? "/aap" : "/gina?tab=history")
   }
 
   function handleDontSave() {
@@ -198,7 +199,9 @@ export function GinaQuestionnaire() {
             <Button variant="ghost" onClick={() => setStep("form")}>
               Close
             </Button>
-            <Button onClick={handleSaveResult}>Save Result</Button>
+            <Button onClick={handleSaveResult}>
+              {showAapNav ? "Save Result and Go to AAP" : "Save Result"}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -216,8 +219,8 @@ export function GinaQuestionnaire() {
             <Button variant="ghost" onClick={handleDontSave}>
               Don&apos;t Save
             </Button>
-            <Button onClick={confirmSave}>
-              Save Result
+            <Button onClick={() => confirmSave(showAapNav)}>
+              {showAapNav ? "Save Result and Go to AAP" : "Save Result"}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -310,29 +313,17 @@ function WellControlledMessage() {
 }
 
 function PartlyControlledMessage({ currentZone }: { currentZone: "green" | "yellow" | "red" }) {
-  const showAapButton = currentZone === "green"
-
   return (
     <div className="rounded-xl bg-zone-yellow/15 p-4">
       <p className="text-sm font-medium text-foreground">
         Your asthma symptoms are partly controlled.
       </p>
-      {showAapButton ? (
-        <>
-          <p className="mt-3 text-sm text-muted-foreground">
-            You may be experiencing an asthma flare-up. Review your Asthma Action Plan and
-            determine whether you need to step up to the Yellow Zone according to your
-            healthcare provider&apos;s instructions.
-          </p>
-          <Link
-            href="/aap"
-            className="mt-4 flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            <FileText className="size-4" aria-hidden="true" />
-            View My AAP
-            <ChevronRight className="size-4" aria-hidden="true" />
-          </Link>
-        </>
+      {currentZone === "green" ? (
+        <p className="mt-3 text-sm text-muted-foreground">
+          You may be experiencing an asthma flare-up. Review your Asthma Action Plan and
+          determine whether you need to step up to the Yellow Zone according to your
+          healthcare provider&apos;s instructions.
+        </p>
       ) : (
         <p className="mt-3 text-sm text-muted-foreground">
           Continue following your medication plan according to your Asthma Action Plan and
@@ -344,28 +335,16 @@ function PartlyControlledMessage({ currentZone }: { currentZone: "green" | "yell
 }
 
 function PoorlyControlledMessage({ currentZone }: { currentZone: "green" | "yellow" | "red" }) {
-  const showAapButton = currentZone === "green"
-
   return (
     <div className="rounded-xl bg-zone-red/10 p-4">
       <p className="text-sm font-medium text-foreground">
         Your asthma symptoms are poorly controlled.
       </p>
-      {showAapButton ? (
-        <>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Follow your Asthma Action Plan Red Zone instructions and speak to your
-            healthcare provider as soon as possible.
-          </p>
-          <Link
-            href="/aap"
-            className="mt-4 flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            <FileText className="size-4" aria-hidden="true" />
-            View My AAP
-            <ChevronRight className="size-4" aria-hidden="true" />
-          </Link>
-        </>
+      {currentZone === "green" ? (
+        <p className="mt-3 text-sm text-muted-foreground">
+          Follow your Asthma Action Plan Red Zone instructions and speak to your
+          healthcare provider as soon as possible.
+        </p>
       ) : (
         <p className="mt-3 text-sm text-muted-foreground">
           Speak to your healthcare provider as soon as possible and continue following your
