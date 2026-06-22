@@ -2,12 +2,13 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, FileText } from "lucide-react"
+import { Hop as Home, FileText, ClipboardCheck } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const items = [
   { href: "/", label: "Home", icon: Home },
   { href: "/aap", label: "Action Plan", icon: FileText },
+  { href: "/gina", label: "GINA", icon: ClipboardCheck },
 ]
 
 export function BottomNav() {
