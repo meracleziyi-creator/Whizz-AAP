@@ -23,12 +23,19 @@ import {
 import { AapUpload } from "@/components/aap/aap-upload"
 import { ChangeZoneDialog } from "@/components/aap/change-zone-dialog"
 
-const SYMPTOMS = [
+const SYMPTOMS_RED = [
   "Difficulty breathing",
   "Difficulty speaking",
   "Wheezing",
   "Night-time symptoms",
   "Needing reliever more often than every 3–4 hours",
+]
+
+const SYMPTOMS_YELLOW = [
+  "Waking up at night due to asthma symptoms",
+  "Day time asthma symptoms more than twice a week",
+  "Use reliever more than twice a week",
+  "Activity limitation due to asthma"
 ]
 
 type Step = "idle" | "result" | "clear" | "review" | "update"
@@ -37,6 +44,12 @@ export function AapScreen() {
   const { zone, zoneUpdatedAt, aapImage, ready } = useAsthma()
   const details = ZONE_DETAILS[zone]
   const styles = ZONE_STYLES[zone]
+  const symptoms =
+    zone === "green"
+      ? SYMPTOMS_YELLOW
+      : zone === "yellow"
+      ? SYMPTOMS_RED
+      : []
 
   const [checked, setChecked] = useState<Record<string, boolean>>({})
   const [step, setStep] = useState<Step>("idle")
@@ -96,29 +109,31 @@ export function AapScreen() {
       </section>
 
       {/* Symptom assessment */}
-      <section className="px-5">
-        <h2 className="text-base font-semibold text-foreground">
-          Do you experience any of the following?
-        </h2>
-        <div className="mt-3 divide-y divide-border rounded-2xl border border-border bg-card">
-          {SYMPTOMS.map((symptom) => (
-            <label
-              key={symptom}
-              className="flex cursor-pointer items-center gap-3 px-4 py-3.5"
-            >
-              <Checkbox
-                checked={!!checked[symptom]}
-                onCheckedChange={() => toggle(symptom)}
-                aria-label={symptom}
-              />
-              <span className="text-sm leading-snug text-foreground">{symptom}</span>
-            </label>
-          ))}
-        </div>
-        <Button className="mt-4 w-full rounded-full" onClick={submit}>
-          Submit Assessment
-        </Button>
-      </section>
+      {zone !== "red" && (
+        <section className="px-5">
+          <h2 className="text-base font-semibold text-foreground">
+            Do you experience any of the following?
+          </h2>
+          <div className="mt-3 divide-y divide-border rounded-2xl border border-border bg-card">
+            {symptoms.map((symptom) => (
+              <label
+                key={symptom}
+                className="flex cursor-pointer items-center gap-3 px-4 py-3.5"
+              >
+                <Checkbox
+                  checked={!!checked[symptom]}
+                  onCheckedChange={() => toggle(symptom)}
+                  aria-label={symptom}
+                />
+                <span className="text-sm leading-snug text-foreground">{symptom}</span>
+              </label>
+            ))}
+          </div>
+          <Button className="mt-4 w-full rounded-full" onClick={submit}>
+            Submit Assessment
+          </Button>
+        </section>
+      )}
 
       {/* Upload */}
       <AapUpload onPreview={(src) => setPreview(src)} />
