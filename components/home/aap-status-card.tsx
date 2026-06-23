@@ -58,7 +58,7 @@ export function AapStatusCard() {
                 <h3 className="font-bold text-yellow-900 text-center mb-4">
                   Your asthma may not be fully under control.
                 </h3>
-                
+
                 <div className="flex gap-3 mb-4">
                   <Pill className="size-5 flex-shrink-0 text-yellow-700 mt-0.5" aria-hidden="true" />
                   <div>
@@ -67,7 +67,7 @@ export function AapStatusCard() {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="flex gap-3">
                   <FileText className="size-5 flex-shrink-0 text-yellow-700 mt-0.5" aria-hidden="true" />
                   <div>
@@ -79,13 +79,40 @@ export function AapStatusCard() {
               </div>
             </div>
           </div>
+        ) : zone === "green" ? (
+          <div className="mt-5 space-y-4 rounded-2xl bg-emerald-50 p-4">
+            <div className="flex gap-3">
+              <Pill className="size-6 flex-shrink-0 text-emerald-700 mt-0.5" aria-hidden="true" />
+              <div>
+                <h3 className="font-bold text-emerald-900 text-center mb-4">
+                  Your asthma is well controlled.
+                </h3>
+                <div className="space-y-3 text-xs leading-relaxed text-emerald-900">
+                  <p>Keep using your preventer inhaler as prescribed even when you feel well.</p>
+                  <p>Use your emergency inhaler when necessary.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : zone === "red" ? (
+          <div className="mt-5 space-y-4 rounded-2xl bg-red-50 p-4">
+            <div className="flex gap-3">
+              <AlertCircle className="size-6 flex-shrink-0 text-red-700 mt-0.5" aria-hidden="true" />
+              <div>
+                <h3 className="font-bold text-red-900 text-center mb-4">
+                  Your asthma symptoms are severe.
+                </h3>
+                <div className="space-y-3 text-xs leading-relaxed text-red-900">
+                  <p>Step up your medication according to AAP red zone and see your doctor NOW!</p>
+                </div>
+              </div>
+            </div>
+          </div>
         ) : (
           <p className="mt-4 text-sm leading-relaxed text-foreground/90 text-pretty">
             {details.message}
           </p>
         )}
-
-        {zone === "green" && <ReviewChecklist />}
 
         <Link
           href="/aap"
