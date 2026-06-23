@@ -26,7 +26,7 @@ export const ZONE_DETAILS: Record<Zone, ZoneInfo> = {
   red: {
     id: "red",
     title: "Red Zone",
-    message: "Step up your medication according to AAP red zone and see your doctor NOW!",
+    message: "Your asthma symptoms are severe. Step up your medication according to AAP red zone and see your doctor NOW!",
   },
 }
 
