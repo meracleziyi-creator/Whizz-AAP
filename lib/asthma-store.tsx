@@ -21,7 +21,7 @@ export const ZONE_DETAILS: Record<Zone, ZoneInfo> = {
     id: "yellow",
     title: "Yellow Zone",
     message:
-      "Your asthma is getting worse. If no improvement 7-14 days of stepping up your medication, escalate to red zone.",
+      "Your asthma is getting worse. If no improvement after 7-14 days of stepping up your medication, escalate to red zone.",
   },
   red: {
     id: "red",
