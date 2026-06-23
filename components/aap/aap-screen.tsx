@@ -191,8 +191,7 @@ export function AapScreen() {
               You appear to be in control
             </DialogTitle>
             <DialogDescription>
-              You did not report any symptoms. Keep following your Green Zone plan and use
-              your preventer inhaler as prescribed.
+              You did not report any symptoms. Keep following your AAP.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
