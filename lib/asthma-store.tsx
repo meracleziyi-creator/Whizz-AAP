@@ -21,7 +21,7 @@ export const ZONE_DETAILS: Record<Zone, ZoneInfo> = {
     id: "yellow",
     title: "Yellow Zone",
     message:
-      "Review your AAP if you have the following symptoms: difficulty breathing or speaking, you need reliever more often than every 3–4 hours, or no improvement after stepping up your medication to the yellow zone for 7–14 days.",
+      "Your asthma is getting worse. If no improvement 7-14 days of stepping up your medication, escalate to red zone.",
   },
   red: {
     id: "red",
