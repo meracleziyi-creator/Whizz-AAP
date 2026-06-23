@@ -38,18 +38,21 @@ const SYMPTOMS_YELLOW = [
   "Activity limitation due to asthma"
 ]
 
+const NONE_OF_ABOVE = "None of the above"
+
 type Step = "idle" | "result" | "clear" | "review" | "update"
 
 export function AapScreen() {
   const { zone, zoneUpdatedAt, aapImage, ready } = useAsthma()
   const details = ZONE_DETAILS[zone]
   const styles = ZONE_STYLES[zone]
-  const symptoms =
+  const baseSymptoms =
     zone === "green"
       ? SYMPTOMS_YELLOW
       : zone === "yellow"
       ? SYMPTOMS_RED
       : []
+  const symptoms = [...baseSymptoms, NONE_OF_ABOVE]
 
   const [checked, setChecked] = useState<Record<string, boolean>>({})
   const [step, setStep] = useState<Step>("idle")
@@ -57,13 +60,23 @@ export function AapScreen() {
   const [preview, setPreview] = useState<string | null>(null)
 
   const selectedCount = Object.values(checked).filter(Boolean).length
+  const noneSelected = checked[NONE_OF_ABOVE]
 
   function toggle(symptom: string) {
-    setChecked((prev) => ({ ...prev, [symptom]: !prev[symptom] }))
+    setChecked((prev) => {
+      if (symptom === NONE_OF_ABOVE) {
+        // Selecting "None of the above" clears all other selections
+        return { [NONE_OF_ABOVE]: !prev[NONE_OF_ABOVE] }
+      } else {
+        // Selecting any other symptom clears "None of the above"
+        const next = { ...prev, [NONE_OF_ABOVE]: false, [symptom]: !prev[symptom] }
+        return next
+      }
+    })
   }
 
   function submit() {
-    setStep(selectedCount > 0 ? "result" : "clear")
+    setStep(noneSelected || selectedCount === 0 ? "clear" : "result")
   }
 
   if (!ready) {
@@ -115,19 +128,27 @@ export function AapScreen() {
             Do you experience any of the following?
           </h2>
           <div className="mt-3 divide-y divide-border rounded-2xl border border-border bg-card">
-            {symptoms.map((symptom) => (
-              <label
-                key={symptom}
-                className="flex cursor-pointer items-center gap-3 px-4 py-3.5"
-              >
-                <Checkbox
-                  checked={!!checked[symptom]}
-                  onCheckedChange={() => toggle(symptom)}
-                  aria-label={symptom}
-                />
-                <span className="text-sm leading-snug text-foreground">{symptom}</span>
-              </label>
-            ))}
+            {symptoms.map((symptom) => {
+              const isNoneOption = symptom === NONE_OF_ABOVE
+              const isDisabled = !isNoneOption && noneSelected
+              return (
+                <label
+                  key={symptom}
+                  className={cn(
+                    "flex items-center gap-3 px-4 py-3.5",
+                    isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+                  )}
+                >
+                  <Checkbox
+                    checked={!!checked[symptom]}
+                    onCheckedChange={() => toggle(symptom)}
+                    disabled={isDisabled}
+                    aria-label={symptom}
+                  />
+                  <span className="text-sm leading-snug text-foreground">{symptom}</span>
+                </label>
+              )
+            })}
           </div>
           <Button className="mt-4 w-full rounded-full" onClick={submit}>
             Submit Assessment

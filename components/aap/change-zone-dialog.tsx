@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useAsthma, ZONE_DETAILS, type Zone } from "@/lib/asthma-store"
+import { useAsthma, type Zone } from "@/lib/asthma-store"
 import { ZONE_STYLES } from "@/lib/zone-styles"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -15,6 +15,12 @@ import {
 } from "@/components/ui/dialog"
 
 const ORDER: Zone[] = ["green", "yellow", "red"]
+
+const ZONE_MESSAGES: Record<Zone, string> = {
+  green: "Your asthma is well controlled",
+  yellow: "Your asthma is getting worse",
+  red: "Your asthma symptoms are severe",
+}
 
 export function ChangeZoneDialog({
   open,
@@ -67,10 +73,10 @@ export function ChangeZoneDialog({
                 <span className={cn("mt-0.5 size-4 shrink-0 rounded-full", styles.dot)} />
                 <span className="flex-1">
                   <span className="block text-sm font-semibold text-foreground">
-                    {ZONE_DETAILS[z].title}
+                    {styles.label} Zone
                   </span>
                   <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">
-                    {ZONE_DETAILS[z].message}
+                    {ZONE_MESSAGES[z]}
                   </span>
                 </span>
               </button>
