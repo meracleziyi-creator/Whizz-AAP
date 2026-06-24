@@ -61,7 +61,7 @@ export function AapStatusCard() {
             <div className="flex gap-3">
               <FileText className="size-5 flex-shrink-0 text-yellow-700 mt-0.5" aria-hidden="true" />
               <p className="text-xs leading-relaxed text-yellow-900">
-                Contact your healthcare provider if symptoms do not improve after 7-14 days of stepping up medications
+                Contact your healthcare provider if symptoms persist after 7–14 days of stepping up medication.
               </p>
             </div>
           </div>
