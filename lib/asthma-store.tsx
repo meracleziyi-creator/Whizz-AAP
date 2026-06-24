@@ -15,18 +15,18 @@ export const ZONE_DETAILS: Record<Zone, ZoneInfo> = {
     id: "green",
     title: "Green Zone",
     message:
-      "Your asthma is under control. Continue your regular medication according to your Asthma Action Plan.",
+      "Continue your regular medication according to your AAP, and always bring rescue inhaler with you.",
   },
   yellow: {
     id: "yellow",
     title: "Yellow Zone",
     message:
-      "Your asthma is getting worse. If no improvement after 7-14 days of stepping up your medication, escalate to red zone.",
+      "If no improvement after 7-14 days of stepping up your medication, escalate to red zone.",
   },
   red: {
     id: "red",
     title: "Red Zone",
-    message: "Your asthma symptoms are severe. Step up your medication according to AAP red zone and see your doctor NOW!",
+    message: "Step up your medication according to AAP red zone and see your doctor NOW!",
   },
 }
 
