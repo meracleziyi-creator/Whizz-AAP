@@ -15,7 +15,7 @@ export const ZONE_DETAILS: Record<Zone, ZoneInfo> = {
     id: "green",
     title: "Green Zone",
     message:
-      "Continue your regular medication according to your AAP, and always bring rescue inhaler with you.",
+      "Continue your regular medication, and always bring rescue inhaler with you.",
   },
   yellow: {
     id: "yellow",
