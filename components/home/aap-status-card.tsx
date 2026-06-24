@@ -29,7 +29,7 @@ export function AapStatusCard() {
         </div>
 
         <div className="mt-4 flex items-center justify-center gap-2">
-          <span className="text-sm text-muted-foreground">Your current zone:</span>
+          <span className="text-sm text-muted-foreground">You are in zone:</span>
           <span
             className={cn(
               "rounded-full px-4 py-1 text-sm font-bold uppercase tracking-wide",
