@@ -55,7 +55,7 @@ export function AapStatusCard() {
             <div className="flex gap-3 mb-4">
               <AlertCircle className="size-5 flex-shrink-0 text-yellow-700 mt-0.5" aria-hidden="true" />
               <p className="text-xs leading-relaxed text-yellow-900">
-                Make sure you are taking your medications according to your Asthma Action Plan. Missing doses can increase the risk of asthma symptoms and flare-ups.
+                Take your medications as prescribed in your Asthma Action Plan to help prevent symptoms and flare-ups.
               </p>
             </div>
             <div className="flex gap-3">
